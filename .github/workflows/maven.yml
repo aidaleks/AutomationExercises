@@ -21,11 +21,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up JDK
+      - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
+          cache: maven
 
-      - name: Run tests
-        run: mvn clean test
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Run Tests
+        run: mvn clean test -Dheadless=true
