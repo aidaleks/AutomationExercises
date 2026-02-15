@@ -29,7 +29,7 @@ Run all tests:
 mvn clean test
 
 Run suite:
-mvn clean test -DsuiteXmlFile=testing.xml
+mvn clean test "-DsuiteXmlFile=testing.xml"
 
 ---
 
@@ -44,10 +44,8 @@ mvn allure:serve
 - Page Object Model
 - Reusable test steps
 - External test data (JSON + properties)
-- Configurable browser settings
 - Dynamic test data generation
 - Clean test design
-- Logging
 - Explicit waits
 
 ---
