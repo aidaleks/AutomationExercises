@@ -5,12 +5,18 @@ import com.automationexercise.core.DriverFactory;
 import com.automationexercise.core.DriverManager;
 import com.automationexercise.pages.HomePage;
 import com.automationexercise.utils.Config;
+import io.qameta.allure.Allure;
 import io.qameta.allure.Step;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
+
+import java.io.ByteArrayInputStream;
 
 import static org.testng.Assert.assertTrue;
 
@@ -58,6 +64,18 @@ public class BaseTest {
     @Step("Verify that home page is visible successfully")
     protected void verifyHomePageLoaded() {
         assertTrue(homePage.isLoaded(), "Home page should be visible");
+    }
+
+    @AfterMethod
+    public void attachScreenshotOnFailure(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            Allure.addAttachment(
+                    "Screenshot",
+                    new ByteArrayInputStream(
+                            ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES)
+                    )
+            );
+        }
     }
 
     @AfterMethod(alwaysRun = true)
